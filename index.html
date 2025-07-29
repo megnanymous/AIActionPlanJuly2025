@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>America's AI Action Plan: An Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #0079FF;
+            line-height: 1;
+        }
+        .pillar-card {
+            border-left: 4px solid #004AAD;
+        }
+        .policy-group-card {
+            background-color: #e0f2fe; /* Light blue from the palette */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 2px 4px -1px rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+            border: 1px solid #bfdbfe; /* A slightly darker light blue */
+        }
+        .policy-item {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 0.9rem;
+            color: #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .policy-item:last-child {
+            margin-bottom: 0;
+        }
+        /* Removed .explain-button styles */
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .modal-close-button:hover {
+            color: #1f2937;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #004AAD;
+            margin-bottom: 1rem;
+        }
+        .modal-body {
+            font-size: 1rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0079FF;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-[#004AAD] text-white text-center py-12 px-4">
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight">AMERICA'S AI ACTION PLAN</h1>
+        <p class="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-blue-100">A Strategic Blueprint for Global AI Dominance and National Security</p>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <section id="introduction" class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-[#004AAD] mb-4">The Global Race for AI Supremacy</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-600">
+                The "America's AI Action Plan" frames the pursuit of AI leadership as a critical national security imperative. The nation that pioneers the AI frontier will set global standards, reaping profound economic and military advantages. This plan is a whole-of-government strategy for the United States to win this race.
+            </p>
+        </section>
+
+        <section id="pillars" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-10">The Three-Pillar Strategy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="kpi-card pillar-card">
+                    <div class="text-5xl font-bold text-[#0079FF] mb-4">I</div>
+                    <h3 class="text-xl font-bold mb-2">Accelerate AI Innovation</h3>
+                    <p class="text-gray-600">Foster a thriving ecosystem for private-sector-led AI development by removing regulatory barriers and promoting American values in AI systems.</p>
+                </div>
+                <div class="kpi-card pillar-card">
+                    <div class="text-5xl font-bold text-[#0079FF] mb-4">II</div>
+                    <h3 class="text-xl font-bold mb-2">Build American AI Infrastructure</h3>
+                    <p class="text-gray-600">Address the critical need for robust data centers, semiconductor manufacturing, and the massive energy generation required to power them.</p>
+                </div>
+                <div class="kpi-card pillar-card">
+                    <div class="text-5xl font-bold text-[#0079FF] mb-4">III</div>
+                    <h3 class="text-xl font-bold mb-2">Lead in International Diplomacy</h3>
+                    <p class="text-gray-600">Export the American AI stack to allies while using stringent export controls and alliances to prevent misuse by adversaries.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pillar1" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-2">Pillar I: Accelerating AI Innovation</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-600 text-center mb-12">
+                Pillar I focuses on creating the optimal conditions for the U.S. private sector to innovate faster and more comprehensively than any global competitor. This involves a multi-pronged approach targeting regulation, workforce development, and strategic R&D investment.
+            </p>
+            <div class="kpi-card">
+                <h3 class="text-xl font-bold mb-4 text-center">Key Policy Action Areas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Regulatory Environment</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Deregulation & Red Tape Removal:</p>
+                                <p>Streamlining processes to accelerate AI development.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Values & Openness</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Ensure AI Protects Free Speech and American Values:</p>
+                                <p>Developing AI systems that uphold fundamental American principles.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Promote Open-Source & Open-Weight AI Models:</p>
+                                <p>Encouraging transparent and accessible AI development.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Adoption & Application</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Drive AI Adoption across Critical Sectors & Government:</p>
+                                <p>Integrating AI tools into essential industries and federal operations.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Accelerate AI Adoption within Government:</p>
+                                <p>Enhancing efficiency and effectiveness in public service through AI.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">DOD AI Adoption:</p>
+                                <p>Ensuring military preeminence through advanced AI integration.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Support Next-Gen Manufacturing with AI:</p>
+                                <p>Leveraging AI to create advanced manufacturing capabilities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Research & Development</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Invest in AI-Enabled Science & Build World-Class Scientific Datasets:</p>
+                                <p>Funding research and creating robust data for scientific breakthroughs.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Advance AI Interpretability, Control, & Robustness:</p>
+                                <p>Improving understanding and reliability of complex AI systems.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Build a Comprehensive AI Evaluations Ecosystem:</p>
+                                <p>Establishing robust methods for assessing AI system performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Protection & Trust</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Protect Commercial & Government AI Innovations:</p>
+                                <p>Safeguarding cutting-edge AI technologies from threats.</p>
+                            </div>
+                        </div>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Combat Synthetic Media in the Legal System:</p>
+                                <p>Addressing challenges posed by deepfakes and manipulated content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="policy-group-card">
+                        <h4 class="font-bold text-[#004AAD] text-lg mb-3">Workforce Development</h4>
+                        <div class="policy-item">
+                            <div>
+                                <p class="font-semibold">Empower the American Workforce for the AI Era:</p>
+                                <p>Providing skills and training for jobs transformed by AI.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-6 text-sm text-gray-500 text-center">This diagram groups the key policy action areas within Pillar I into thematic categories, illustrating the multi-faceted approach to accelerating AI innovation.</p>
+            </div>
+            <div class="kpi-card mt-8">
+                <h3 class="text-xl font-bold mb-4 text-center">A "Worker-First" AI Agenda</h3>
+                 <div class="space-y-4 text-left">
+                    <div class="flex items-start">
+                        <span class="text-2xl text-[#0079FF] mr-3">🎓</span>
+                        <p><span class="font-semibold">Skill Development:</span> Prioritize AI literacy and skill development in national education and workforce funding streams.</p>
+                    </div>
+                    <div class="flex items-start">
+                         <span class="text-2xl text-[#0079FF] mr-3">💼</span>
+                        <p><span class="font-semibold">Rapid Retraining:</span> Leverage funding for rapid retraining programs for workers displaced by AI-related job shifts.</p>
+                    </div>
+                     <div class="flex items-start">
+                         <span class="text-2xl text-[#0079FF] mr-3">📈</span>
+                        <p><span class="font-semibold">Labor Market Analysis:</span> Direct the Bureau of Labor Statistics to study AI's impact on jobs, wages, and productivity.</p>
+                    </div>
+                     <div class="flex items-start">
+                         <span class="text-2xl text-[#0079FF] mr-3">🤝</span>
+                        <p><span class="font-semibold">Private Sector Investment:</span> Encourage private sector investment in training through tax-advantaged reimbursement programs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pillar2" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-2">Pillar II: Building American AI Infrastructure</h2>
+             <p class="max-w-4xl mx-auto text-lg text-gray-600 text-center mb-12">
+                AI's progress is fundamentally tied to physical infrastructure. This pillar addresses the urgent need to build more data centers, onshore semiconductor manufacturing, and, most critically, generate the vast amounts of energy required to power the AI revolution.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div class="kpi-card">
+                    <h3 class="text-xl font-bold mb-4 text-center">Projected U.S. Energy Demand Growth</h3>
+                    <div class="chart-container">
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                     <p class="mt-4 text-sm text-gray-500 text-center">This chart projects the significant increase in U.S. energy demand driven by the proliferation of AI data centers, underscoring the need for a massive expansion of reliable power generation.</p>
+                </div>
+                <div class="kpi-card">
+                    <h3 class="text-xl font-bold mb-4 text-center">Streamlined Permitting Flow</h3>
+                    <div class="space-y-2">
+                        <div class="p-4 bg-blue-50 rounded-lg text-center">
+                            <p class="font-semibold">Infrastructure Project Proposal</p>
+                            <p class="text-sm text-gray-700 mt-1">This refers to new large-scale constructions like data centers, power plants, and semiconductor fabrication facilities.</p>
+                        </div>
+                        <div class="text-center flow-arrow">▼</div>
+                        <div class="p-4 bg-blue-50 rounded-lg text-center">
+                            <p class="font-semibold">Expedited Permitting Process</p>
+                            <p class="text-sm text-gray-700 mt-1">Utilizing National Environmental Policy Act (NEPA) exclusions and expanding the FAST-41 process to speed up approvals.</p>
+                        </div>
+                        <div class="text-center flow-arrow">▼</div>
+                        <div class="p-4 bg-blue-50 rounded-lg text-center">
+                            <p class="font-semibold">Reduced Regulatory Burden</p>
+                            <p class="text-sm text-gray-700 mt-1">Streamlining regulations under acts like the Clean Air Act and Clean Water Act to ease construction.</p>
+                        </div>
+                        <div class="text-center flow-arrow">▼</div>
+                        <div class="p-4 bg-green-100 rounded-lg text-center text-green-800">
+                             <p class="font-semibold">Rapid Construction & Operation</p>
+                             <p class="text-sm text-green-700 mt-1">An aggressive directive to quickly build and operationalize critical AI infrastructure.</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500 text-center">The plan mandates a radical simplification of the permitting process for critical AI infrastructure to accelerate buildout.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="pillar3" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-2">Pillar III: International Diplomacy & Security</h2>
+            <p class="max-w-4xl mx-auto text-lg text-gray-600 text-center mb-12">
+                American AI leadership must extend beyond its borders. Pillar III outlines a dual strategy: forging a global alliance by exporting American AI technology to partners, while simultaneously implementing robust controls to prevent adversaries from exploiting U.S. innovations.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="kpi-card">
+                    <h3 class="text-xl font-bold mb-4 text-center">✅ To Allies & Partners</h3>
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <h4 class="font-semibold text-green-800">Export Full-Stack American AI</h4>
+                        <p class="text-gray-600 mt-2">Actively promote and facilitate the export of the complete U.S. AI technology stack—from semiconductors and hardware to models and applications—to create an enduring global alliance founded on American technology and values.</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <h3 class="text-xl font-bold mb-4 text-center">❌ To Adversaries & Countries of Concern</h3>
+                     <div class="p-4 bg-red-50 rounded-lg">
+                        <h4 class="font-semibold text-red-800">Strengthen & Enforce Export Controls</h4>
+                        <p class="text-gray-600 mt-2">Plug loopholes in semiconductor manufacturing controls, leverage location verification for advanced chips, and align with allies to prevent technology backfilling to adversaries, thereby protecting the U.S. defense-industrial base.</p>
+                    </div>
+                </div>
+                 <div class="kpi-card md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 text-center">Key International Policy Arenas</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold text-[#004AAD] mb-2">Allied Tech Protection</h4>
+                            <p class="text-sm text-gray-700">Develop and share complementary technology protection measures with allies.</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold text-[#004AAD] mb-2">Compute Export Controls</h4>
+                            <p class="text-sm text-gray-700">Leverage location verification for advanced AI compute to prevent diversion.</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold text-[#004AAD] mb-2">Semiconductor Loopholes</h4>
+                            <p class="text-sm text-gray-700">Develop new export controls on semiconductor manufacturing sub-systems.</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4 text-center">
+                            <h4 class="font-semibold text-[#004AAD] mb-2">Biosecurity Measures</h4>
+                            <p class="text-sm text-gray-700">Require screening for nucleic acid synthesis tools in federally funded research.</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4 text-center sm:col-span-2">
+                            <h4 class="font-semibold text-[#004AAD] mb-2">Countering Influence in Governance</h4>
+                            <p class="text-sm text-gray-700">Advocate for AI governance reflecting American values in international forums.</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm text-gray-500 text-center">This section highlights key international policy areas, emphasizing protection, control, and alignment with allies.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-6">
+        <p>An infographic based on The White House "America's AI Action Plan" of July 2025.</p>
+        <p class="text-sm text-gray-400 mt-1">This visualization is for informational purposes only.</p>
+    </footer>
+
+    <!-- Policy Explanation Modal -->
+    <div id="explanationModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModalButton">&times;</button>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            <p class="modal-body" id="modalBody"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            const processLabels = (labels) => {
+                return labels.map(label => {
+                    if (label.length > 16) {
+                        const words = label.split(' ');
+                        const newLabel = [];
+                        let line = '';
+                        words.forEach(word => {
+                            if ((line + word).length > 16) {
+                                newLabel.push(line.trim());
+                                line = '';
+                            }
+                            line += word + ' ';
+                        });
+                        newLabel.push(line.trim());
+                        return newLabel;
+                    }
+                    return label;
+                });
+            };
+
+            const brilliantBlues = ['#004AAD', '#0079FF', '#52A5FF', '#BDEFFF'];
+            const brilliantBluesBg = ['rgba(0, 74, 173, 0.7)', 'rgba(0, 121, 255, 0.7)', 'rgba(82, 165, 255, 0.7)', 'rgba(189, 239, 255, 0.7)'];
+
+            // Energy Chart
+            const energyChartCtx = document.getElementById('energyChart').getContext('2d');
+            new Chart(energyChartCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2027', '2029', '2031', '2033', '2035'],
+                    datasets: [{
+                        label: 'Projected Energy Demand (TWh)',
+                        data: [160, 250, 400, 650, 900, 1250],
+                        fill: true,
+                        backgroundColor: 'rgba(0, 121, 255, 0.2)',
+                        borderColor: '#0079FF',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                           display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Energy Demand (TWh)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // LLM Integration for Policy Explanation (Removed event listeners as buttons are removed)
+            const explanationModal = document.getElementById('explanationModal');
+            const closeModalButton = document.getElementById('closeModalButton');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            const openModal = (title, content) => {
+                modalTitle.textContent = title;
+                modalBody.textContent = content;
+                explanationModal.classList.add('open');
+            };
+
+            const closeModal = () => {
+                explanationModal.classList.remove('open');
+                modalTitle.textContent = '';
+                modalBody.textContent = '';
+                loadingSpinner.style.display = 'none';
+            };
+
+            closeModalButton.addEventListener('click', closeModal);
+            explanationModal.addEventListener('click', (e) => {
+                if (e.target === explanationModal) {
+                    closeModal();
+                }
+            });
+
+            // Removed explainPolicy function and button event listeners
+        });
+    </script>
+</body>
+</html>
